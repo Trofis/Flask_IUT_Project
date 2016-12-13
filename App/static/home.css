@@ -8,6 +8,7 @@ h1
 li
 {
   list-style: none;
+  color: white;
 }
 div.sample{
   text-align:center;
@@ -18,4 +19,18 @@ div.sample{
 body
 {
   font-family: sans-serif;
+}
+
+#main{
+  margin-top: 5em;
+}
+
+.navbar-default{
+  background-color: #394b77;
+  border-color: #8ddc92;
+}
+
+
+#navbar> ul >li> a, #title {
+  color:white;
 }
