@@ -1,11 +1,18 @@
-import yaml, os.path
+from .app import db
 
-Albums=yaml.load(
-    open(
-        os.path.join(
-            os.path.dirname(__file__),
-            "albums.yml")))
+class Individu(db.Model):
+    id      = db.Column(db.Integer, primary_key = True)
+    name    = db.Column(db.String(100))
 
+class Genre(db.Model):
+    id      = db.Column(db.Integer, primary_key = True)
+    name    = db.Column(db.String(100))
 
-def get_sample():
-    return Albums[0:10]
+class Music(db.Model):
+    id          = db.Column(db.Integer, primary_key = True)
+    title       = db.Column(db.String(100))
+    img         = db.Column(db.String(100))
+    year        = db.Column(db.String(100))
+    author_id   = db.Column(db.Integer, db.ForeignKey("Individu.id"))
+    players_id  = db.Column(db.Integer, db.ForeignKey("Individu.id"))
+    genre       = [db.Column(db.Integer, db.ForeignKey("Genre.id"))]
