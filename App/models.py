@@ -16,3 +16,12 @@ class Music(db.Model):
     author_id   = db.Column(db.Integer, db.ForeignKey("Individu.id"))
     players_id  = db.Column(db.Integer, db.ForeignKey("Individu.id"))
     genre       = [db.Column(db.Integer, db.ForeignKey("Genre.id"))]
+
+db.session.add(Individu)
+db.session.add(Genre)
+db.session.add(Music)
+db.session.commit()
+
+
+def get_Albums():
+    return Music.query.all()

@@ -14,6 +14,15 @@ Bootstrap(app)
 
 #-------------------- SQLAlchemy --------------------#
 from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../myApp.db'))
+import os.path
+
+def mkpath(p):
+    return os.path.normpath(
+        os.path.join(
+            os.path.dirname(__file__), p
+        )
+    )
+
+app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('/myApp.db'))
 
 db = SQLAlchemy(app)
