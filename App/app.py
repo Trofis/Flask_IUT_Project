@@ -9,8 +9,10 @@ manager = Manager(app)
 #-------------------- Bootstrap --------------------#
 from flask_bootstrap import Bootstrap
 app.config['BOOTSTRAP_SERVE_LOCAL']=True
-Bootstrap(app)
 
+
+
+Bootstrap(app)
 
 #-------------------- SQLAlchemy --------------------#
 from flask_sqlalchemy import SQLAlchemy
@@ -23,6 +25,6 @@ def mkpath(p):
         )
     )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('/myApp.db'))
+app.config['SQLALCHEMY_DATABASE_URI'] = ('sqlite:///'+mkpath('../myApp.db'))
 
 db = SQLAlchemy(app)

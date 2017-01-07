@@ -7,4 +7,11 @@ def home():
     return render_template(
         "home.html",
         title = "Patronat & Mendes Musics",
-        Music=get_Albums())
+        Albums = get_Albums())
+
+
+@app.route("/signin")
+def signin():
+    return render_template(
+        "signin.html",
+        title = "SignIn")

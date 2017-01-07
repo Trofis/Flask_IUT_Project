@@ -1,9 +1,7 @@
 h1
 {
   text-align: center;
-  color:red;
 }
-
 
 li
 {
@@ -25,12 +23,32 @@ body
   margin-top: 5em;
 }
 
-.navbar-default{
+.navbar-default, footer{
   background-color: #394b77;
   border-color: #8ddc92;
 }
 
 
 #navbar> ul >li> a, #title {
+  color:white;
+}
+
+footer
+{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding-top:20px;
+  color:white;
+}
+
+.form-signin
+{
+  max-width: 500px;
+  padding: 15px;
+  margin: 0px auto;
+}
+
+footer> div >.text-muted{
   color:white;
 }
