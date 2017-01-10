@@ -21,6 +21,15 @@ class User(db.Model):
     login    = db.Column(db.String(100))
     password    = db.Column(db.String(100))
 
+class Appartient(db.Model):
+    __tablename__ = 'appartient'
+    id      = db.Column(db.Integer, primary_key = True)
+
+    music_id = db.Column(db.Integer, db.ForeignKey("music.id"))
+    music = db.relationship("Music", foreign_keys=[music_id])
+
+    genre_id = db.Column(db.Integer, db.ForeignKey("genre.id"))
+    genre = db.relationship("Genre", foreign_keys=[genre_id])
 
 class Listen(db.Model):
     __tablename__ = 'listen'
@@ -45,8 +54,7 @@ class Music(db.Model):
     player_id  = db.Column(db.Integer, db.ForeignKey("player.id"))
     player = db.relationship("Player", foreign_keys=[player_id])
 
-    genre_id = db.Column(db.Integer, db.ForeignKey("genre.id"))
-    genre = db.relationship("Genre", foreign_keys=[genre_id])
+
 
 
 
