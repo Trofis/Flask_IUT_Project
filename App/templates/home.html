@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block main %}
-  <div class="row">
-      <h1>{{title}}</h1>
+  <h1>{{title}}</h1>
+  <div class="grid">
+      {% for a in Albums %}
+        <div class="col-xs-6 col-lg-4">
+              <h2>{{a["title"]}}</h2>
+        </div>
+        <!-- <img src="static/images/{{a[img]}}" alt="" /> -->
+
+      {% endfor %}
+
+
   </div>
 {% endblock %}
