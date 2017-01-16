@@ -2,11 +2,13 @@
 {% block main %}
   <h1>{{title}}</h1>
   <div class="grid">
-    <ul>
       {% for a in Albums %}
-        <img src="static/images/{{a[img]}}" alt="" />
+        <div class="col-xs-6 col-lg-4">
+              <h2>{{a["title"]}}</h2>
+        </div>
+        <!-- <img src="static/images/{{a[img]}}" alt="" /> -->
+
       {% endfor %}
-    </ul>
 
 
   </div>

@@ -1,0 +1,42 @@
+- by: Superdrag
+  entryId: 67913
+  genre: [Rock, Punk]
+  img: Superdrag-Stereo_360_Sound.jpg
+  parent: Superdrag
+  releaseYear: 1998
+  title: Stereo 360 Sound
+- by: 16 Horsepower
+  entryId: 10575
+  genre: [Alternative country, neofolk]
+  img: 220px-Folklore_hp.jpg
+  parent: 16 Horsepower
+  releaseYear: 2002
+  title: Folklore
+- by: Ryan Adams
+  entryId: 10637
+  genre: [Alternative country, country]
+  img: 220px-RyanAdamsHeartbreaker.jpg
+  parent: Ryan Adams
+  releaseYear: 2000
+  title: Heartbreaker
+- by: Ryan Adams
+  entryId: 10644
+  genre: [Rock, alternative country, pop rock]
+  img: 220px-Ryanadamsselftitled.jpg
+  parent: Ryan Adams
+  releaseYear: 2014
+  title: Ryan Adams
+- by: Whiskeytown
+  entryId: 10660
+  genre: [Alternative country]
+  img: 220px-WhiskeytownPneumonia.jpg
+  parent: Ryan Adams
+  releaseYear: 2001
+  title: Pneumonia
+- by: Jesse Malin
+  entryId: 10668
+  genre: []
+  img: The_Fine_Art_of_Self_Destruction.jpg
+  parent: Ryan Adams
+  releaseYear: 2002
+  title: The Fine Art of Self Destruction
