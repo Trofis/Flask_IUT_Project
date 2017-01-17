@@ -55,3 +55,26 @@ def loaddb(filename):
             db.session.add(o)
         db.session.add(mus)
     db.session.commit()
+
+
+
+@manager.command
+def addUser(_login, _password, _type):
+    from .models import User
+    user = User(login=_login, password=_password,typeUSer = _type )
+    db.session.add(user)
+    db.session.commit()
+
+@manager.command
+def addAlbum(_author_id, _player_id, _genre, _titre, _image, _year ):
+    from .models import Album, Player, Author, Genre, Appartient
+    p = Player.query.filter(Player.id = _player_id)
+    a = Author.query.filter(Author.id = _author_id)
+    if p not null and a not null:
+        alb = Album(title=_titre, img=_image, year = _year, author_id = _author_id, player_id= _player_id)
+        for g in _genre:
+
+        db.session.add(user)
+        db.session.commit()
+    else:
+        print("Author or Player does not exist")

@@ -53,3 +53,9 @@ class Album(db.Model):
 
 def get_Albums():
     return Album.query.all()
+
+def get_Genre():
+    return db.execute('select name from Genre').all();
+
+
+print(get_Genre())
