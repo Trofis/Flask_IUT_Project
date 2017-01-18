@@ -70,11 +70,20 @@ def addAlbum(_author_id, _player_id, _genre, _titre, _image, _year ):
     from .models import Album, Player, Author, Genre, Appartient
     p = Player.query.filter(Player.id = _player_id)
     a = Author.query.filter(Author.id = _author_id)
-    if p not null and a not null:
+    if p is not null and a is not null:
         alb = Album(title=_titre, img=_image, year = _year, author_id = _author_id, player_id= _player_id)
         for g in _genre:
+            g_query = Genre.query.filter(Genre.name = _genre)
+            if g_query is not null:
+                app = Appartient(alb.id, g_query.id)
+            else:
+                go = Genre(nom = _genre)
+                app = Appartient(alb.id, go.id)
+                db.session.add(go)
+            db.session.add(app)
+            db.session.commit()
 
-        db.session.add(user)
+        db.session.add(alb)
         db.session.commit()
     else:
         print("Author or Player does not exist")
