@@ -2,7 +2,7 @@ from .app import manager, db
 
 @manager.command
 def loaddb(filename):
-
+    "parameters : filename"
     db.create_all()
 
 
@@ -60,25 +60,51 @@ def loaddb(filename):
 
 @manager.command
 def addUser(_login, _password, _type):
+    "parameters : login, password, type"
     from .models import User
     user = User(login=_login, password=_password,typeUSer = _type )
     db.session.add(user)
     db.session.commit()
 
 @manager.command
-def addAlbum(_author_id, _player_id, _genre, _titre, _image, _year ):
+def addGenreOrAuthorOrPlayer(name, typeCom):
+    "parameters : name, type"
+    from .models import Genre, Author, Player
+    if typeCom == "Player":
+        o = Player(name = name)
+    if typeCom == "Author":
+        o = Author(name = name)
+    if typeCom == "Genre":
+        o = Genre(name = name)
+    db.session.add(o)
+    db.session.commit()
+
+@manager.command
+def addListenForOneUser(id_User, id_Album):
+    "parameters : id_User, id_Albums"
     from .models import Album, Player, Author, Genre, Appartient
-    p = Player.query.filter(Player.id = _player_id)
-    a = Author.query.filter(Author.id = _author_id)
-    if p is not null and a is not null:
+    a = Appartient.query.filter_by(user_id = id_User, album_id= id_Album)
+    if a is None:
+        o = Appartient(user_id = id_User, album_id= id_Album)
+        db.session.add(o)
+        db.session.commit()
+
+
+@manager.command
+def addAlbum(_author_id, _player_id, _genre, _titre, _image, _year ):
+    "parameters : _author_id, _player_id, _genre, _titre,_image, _year "
+    from .models import Album, Player, Author, Genre, Appartient
+    p = Player.query.filter_by(id = _player_id)
+    a = Author.query.filter_by(id = _author_id)
+    if p is not None and a is not None:
         alb = Album(title=_titre, img=_image, year = _year, author_id = _author_id, player_id= _player_id)
         for g in _genre:
-            g_query = Genre.query.filter(Genre.name = _genre)
-            if g_query is not null:
+            g_query = Genre.query.filter_by(name = _genre)
+            if g_query is None:
                 app = Appartient(alb.id, g_query.id)
             else:
-                go = Genre(nom = _genre)
-                app = Appartient(alb.id, go.id)
+                go = Genre(name = _genre)
+                app = Appartient(album_id = alb.id, genre_id= go.id)
                 db.session.add(go)
             db.session.add(app)
             db.session.commit()
