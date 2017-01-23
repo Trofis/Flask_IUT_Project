@@ -1,16 +1,17 @@
 from .app import db
+from sqlalchemy import text
 
 class Author(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
-    name    = db.Column(db.String(100))
+    nameA    = db.Column(db.String(100))
 
 class Player(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
-    name    = db.Column(db.String(100))
+    nameP    = db.Column(db.String(100))
 
 class Genre(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
-    name    = db.Column(db.String(100))
+    nameG    = db.Column(db.String(100))
 
 class User(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
@@ -53,3 +54,12 @@ class Album(db.Model):
 
 def get_Albums():
     return Album.query.all()
+
+def get_AlbumsByGenre(genre):
+    #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
+    #print(sql)
+    result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'"')
+    names = []
+    for row in result:
+        names.append(row)
+    return names

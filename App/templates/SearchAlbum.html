@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="container">
+    <div class="row">
+      <div class="blog-header">
+        <h1 class="blog-title">Search an Album</h1>
+        <p class="lead blog-description">
+          Good Research ! ;)
+        </p>
+      </div>
+      <div class="row">
+          <div class="col-sm-2 blog-main">
+            <form class="form-group" action="SearchAlbum" method="post">
+              <label>Select Genre</label> </br>
+              <input type="radio" name="genre" value="Rock" checked> Rock<br>
+              <input type="radio" name="genre" value="Electro"> Electro<br>
+              <input type="radio" name="genre" value="Pop"> Pop</br>
+              <input type="radio" name="genre" value="Punk"> Punk</br>
+              <input type="radio" name="genre" value="Country"> Country</br><br>
+              <input type="submit" name="genre" value="Confirmer" class="btn-primary btn-lg btn">
+            </form>
+          </div>
+          <div  class="col-lg-7 col-sm-offset-1 blog-sidebar row marketing">
+            {% for alb in Albums %}
+            <div class="col-lg-6">
+              <h2>{{alb[0]}}</h2>
+
+              <img src="{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+
+            </div>
+
+
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

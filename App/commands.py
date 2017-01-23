@@ -20,18 +20,18 @@ def loaddb(filename):
         p = m["parent"]
         g = m["genre"]
         if a not in author:
-            o = Author(name=a)
+            o = Author(nameA=a)
             db.session.add(o)
             author[a] = o
 
         if p not in player:
-            o = Player(name=p)
+            o = Player(nameP=p)
             db.session.add(o)
             player[p] = o
 
         for genre in g:
             if genre not in gender:
-                o = Genre(name=genre)
+                o = Genre(nameG=genre)
                 db.session.add(o)
                 gender[genre] = o
         db.session.commit()
