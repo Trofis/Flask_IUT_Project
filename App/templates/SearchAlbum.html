@@ -12,11 +12,27 @@
           <div class="col-sm-2 blog-main">
             <form class="form-group" action="SearchAlbum" method="post">
               <label>Select Genre</label> </br>
-              <input type="radio" name="genre" value="Rock" checked> Rock<br>
-              <input type="radio" name="genre" value="Electro"> Electro<br>
-              <input type="radio" name="genre" value="Pop"> Pop</br>
-              <input type="radio" name="genre" value="Punk"> Punk</br>
-              <input type="radio" name="genre" value="Country"> Country</br><br>
+              {% for g in genre %}
+                {% if g.nameG == genreAct %}
+                <input type="radio" name="genre" value="{{g.nameG}}" act checked> {{g.nameG}}<br>
+                {% else %}
+                <input type="radio" name="genre" value="{{g.nameG}}" act> {{g.nameG}}<br>
+                {% endif %}
+              {% endfor %}
+              <br>
+              <label>Select Year</label> </br>
+              <select class="form-control" name="year">
+                {% for y in years %}
+                <option value="{{y}}"> {{y}} </option><br>
+                {% endfor %}
+              </select>
+              <br>
+
+              <label >Select your filters              </label> <br>
+                <input id="inlineCheckbox1" type="checkbox" name="filter" value="genre"> Genre<br>
+                <input id="inlineCheckbox2" type="checkbox" name="filter" value="year"> Year <br>
+
+              <br>
               <input type="submit" name="genre" value="Confirmer" class="btn-primary btn-lg btn">
             </form>
           </div>

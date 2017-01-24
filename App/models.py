@@ -55,6 +55,9 @@ class Album(db.Model):
 def get_Albums():
     return Album.query.all()
 
+def get_Genre():
+    return Genre.query.all()
+
 def get_AlbumsByGenre(genre):
     #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
     #print(sql)
