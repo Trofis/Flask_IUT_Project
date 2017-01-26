@@ -1,7 +1,4 @@
-h1
-{
-  text-align: center;
-}
+
 
 li
 {
@@ -33,13 +30,27 @@ body
   color:white;
 }
 
-footer
+#divCol
 {
-  position: absolute;
+  display: inline-block;
+}
+
+.footer
+{
+  background-image: none;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-origin: padding-box;
+  background-size: auto auto;
+
+  margin-top: 2em;
+
   width: 100%;
-  bottom: 0;
-  padding-top:20px;
-  color:white;
+  height: 100px;
+
+  position:absolute;
+  left: 0;
 }
 
 .form-signin

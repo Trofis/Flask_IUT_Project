@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="container">
+    <div class="row">
+      <div class="blog-header">
+        <h1 class="blog-title">Search an Album</h1>
+        <p class="lead blog-description">
+          Good Research ! ;)
+        </p>
+      </div>
+      <div class="row">
+          <div class="col-sm-2 blog-main">
+            <form class="form-group" action="SearchAlbum" method="post">
+              <label>Select Genre</label> </br>
+              {% for g in genre %}
+                {% if g.nameG == genreAct %}
+                <input type="radio" name="genre" value="{{g.nameG}}" act checked> {{g.nameG}}<br>
+                {% else %}
+                <input type="radio" name="genre" value="{{g.nameG}}" act> {{g.nameG}}<br>
+                {% endif %}
+              {% endfor %}
+              <br>
+              <label>Select Year</label> </br>
+              <select class="form-control" name="year">
+                {% for y in years %}
+                <option value="{{y}}"> {{y}} </option><br>
+                {% endfor %}
+              </select>
+              <br>
+
+              <label >Select your filters              </label> <br>
+              {% if genreI %}
+                <input id="inlineCheckbox1" type="checkbox" name="filter" value="genre" checked> Genre<br>
+              {% else %}
+                <input id="inlineCheckbox1" type="checkbox" name="filter" value="genre"> Genre<br>
+              {% endif %}
+              {% if yearI %}
+                <input id="inlineCheckbox2" type="checkbox" name="filter" value="year" checked> Year <br>
+              {% else %}
+                <input id="inlineCheckbox2" type="checkbox" name="filter" value="year"> Year <br>
+              {% endif %}
+
+              <br>
+              <input type="submit" name="genre" value="Confirmer" class="btn-primary btn-lg btn">
+            </form>
+          </div>
+          <div  class="col-lg-7 col-sm-offset-1 blog-sidebar row marketing">
+            {% for alb in Albums %}
+            <div class="col-lg-6">
+              {% if typeR == "POST" %}
+                <h2>{{alb[0]}}</h2>
+
+                <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+              {% else %}
+              <h2>{{alb.title}}</h2>
+
+              <img src="static/images/{{alb.img}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+
+              {% endif %}
+
+            </div>
+
+
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

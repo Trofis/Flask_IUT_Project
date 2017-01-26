@@ -5,8 +5,9 @@
       {% for a in Albums %}
         <div class="col-xs-6 col-lg-4">
               <h2>{{a["title"]}}</h2>
+              <img src="static/images/{{a.img}}" alt="" onerror="this.src='../static/INF.jpg'"/>
         </div>
-        <!-- <img src="static/images/{{a[img]}}" alt="" /> -->
+
 
       {% endfor %}
 

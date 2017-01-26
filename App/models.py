@@ -1,16 +1,17 @@
 from .app import db
+from sqlalchemy import text
 
 class Author(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
-    name    = db.Column(db.String(100))
+    nameA    = db.Column(db.String(100))
 
 class Player(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
-    name    = db.Column(db.String(100))
+    nameP    = db.Column(db.String(100))
 
 class Genre(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
-    name    = db.Column(db.String(100))
+    nameG    = db.Column(db.String(100))
 
 class User(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
@@ -55,7 +56,25 @@ def get_Albums():
     return Album.query.all()
 
 def get_Genre():
-    return Genre.query.with_entities(Genre.name).all();
+    return Genre.query.all()
 
+def get_AlbumsByYear(y):
+    return Album.query.filter_by(year=y).all()
 
-print(get_Genre())
+def get_AlbumsByGenre(genre):
+    #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
+    #print(sql)
+    result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'"')
+    names = []
+    for row in result:
+        names.append(row)
+    return names
+
+def get_AlbumsByGenreByYear(genre, year):
+    #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
+    #print(sql)
+    result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'" and year ="'+year+'"')
+    names = []
+    for row in result:
+        names.append(row)
+    return names
