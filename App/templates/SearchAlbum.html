@@ -29,8 +29,16 @@
               <br>
 
               <label >Select your filters              </label> <br>
+              {% if genreI %}
+                <input id="inlineCheckbox1" type="checkbox" name="filter" value="genre" checked> Genre<br>
+              {% else %}
                 <input id="inlineCheckbox1" type="checkbox" name="filter" value="genre"> Genre<br>
+              {% endif %}
+              {% if yearI %}
+                <input id="inlineCheckbox2" type="checkbox" name="filter" value="year" checked> Year <br>
+              {% else %}
                 <input id="inlineCheckbox2" type="checkbox" name="filter" value="year"> Year <br>
+              {% endif %}
 
               <br>
               <input type="submit" name="genre" value="Confirmer" class="btn-primary btn-lg btn">
@@ -39,9 +47,16 @@
           <div  class="col-lg-7 col-sm-offset-1 blog-sidebar row marketing">
             {% for alb in Albums %}
             <div class="col-lg-6">
-              <h2>{{alb[0]}}</h2>
+              {% if typeR == "POST" %}
+                <h2>{{alb[0]}}</h2>
 
-              <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+                <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+              {% else %}
+              <h2>{{alb.title}}</h2>
+
+              <img src="static/images/{{alb.img}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+
+              {% endif %}
 
             </div>
 

@@ -58,10 +58,22 @@ def get_Albums():
 def get_Genre():
     return Genre.query.all()
 
+def get_AlbumsByYear(y):
+    return Album.query.filter_by(year=y).all()
+
 def get_AlbumsByGenre(genre):
     #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
     #print(sql)
     result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'"')
+    names = []
+    for row in result:
+        names.append(row)
+    return names
+
+def get_AlbumsByGenreByYear(genre, year):
+    #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
+    #print(sql)
+    result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'" and year ="'+year+'"')
     names = []
     for row in result:
         names.append(row)
