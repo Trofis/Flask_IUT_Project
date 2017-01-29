@@ -22,9 +22,14 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li><a href="SearchAlbum">SearchAlbum</a></li>
+
+              {% if current_user.is_authenticated %}
+              <li><a href="#">{{current_user.username}}</a></li>
+              <li><a href="{{ url_for('logout')}}"><span class="glyphicon glyphicon-log-out" title="Logout"></span></a></li>
+              {% else %}
               <li><a href="signin">SignIn</a></li>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">Help</a></li>
+              {% endif %}
+
             </ul>
           <form class="navbar-form navbar-right">
             <input class="form-control" placeholder="Search Music..." type="text">

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block main %}
-  <form class="form-signin">
+  <form class="form-signin" role="form" method="POST" action="{{ url_for('signin') }}">
+    {{ form.hidden_tag()}}
     <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">
+    <label for="Username" class="sr-only">{{ form.username.label }}</label>
+    <input id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="" type="text">
+    <label for="inputPassword" class="sr-only">{{ form.password.label }}</label>
+    <input id="password" name="password" class="form-control" placeholder="Password" required="" type="password">
     <div class="checkbox">
       <label>
         <input value="remember-me" type="checkbox"> Remember me
