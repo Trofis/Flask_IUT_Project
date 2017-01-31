@@ -122,6 +122,7 @@ def syncdb():
 
 @manager.command
 def newuser(username,password, type):
+    "parameters : username, password, type"
     from .models import User
     from hashlib import sha256
     m = sha256()
@@ -129,3 +130,13 @@ def newuser(username,password, type):
     u = User(username=username, password=m.hexdigest(), typeUSer=type)
     db.session.add(u)
     db.session.commit()
+
+
+@manager.command
+def modifUser(username, password, type):
+    "parameters : username, password, type"
+    from .models import User
+    from hashlib import sha256
+    m = sha256()
+    m.update(password.encode())
+    u = db.engine.execute("Update User set password = ? and typeUSer = ? where username=?", (str(password)),(str(type)), (str(username)))
