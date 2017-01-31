@@ -1,4 +1,4 @@
-from .app import app
+from .app import app, db
 from flask import render_template, request
 from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear
 
@@ -12,11 +12,6 @@ def home():
 
 
 
-@app.route("/signup")
-def signup():
-    return render_template(
-        "signin.html",
-        title = "SignIn")
 
 
 @app.route("/SearchAlbum", methods=["POST", "GET"])
@@ -85,14 +80,30 @@ class LoginForm(FlaskForm):
 
     def get_authenticated_user(self):
         user = User.query.filter_by(username=self.username.data).first()
-        print(self.username.data)
         if user is None:
             return None
-        print("ok")
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
         return user if passwd == user.password else None
+
+class SignUpForm(FlaskForm):
+    username = StringField("Username")
+    password = PasswordField("Password")
+    confirmPassword = PasswordField("ConfirmPassword")
+
+    def get_authenticated_user(self):
+        user = User.query.filter_by(username=self.username.data).first()
+        if user is None:
+            if (self.password.data.encode() == self.confirmPassword.data.encode()):
+                m = sha256()
+                m.update(self.password.data.encode())
+                passwd = m.hexdigest()
+                u = User(username=self.username.data, password=passwd, typeUSer= "client")
+                db.session.add(u)
+                db.session.commit()
+                return u
+        return None
 
 from flask_login import login_user, current_user, logout_user
 from flask import request, redirect, url_for
@@ -100,17 +111,30 @@ from flask import request, redirect, url_for
 @app.route("/signin", methods=("GET", "POST"))
 def signin():
     f = LoginForm()
-    print(f.username)
-    print(f.password)
     if f.validate_on_submit():
         user = f.get_authenticated_user()
-        print(user)
         if user:
             login_user(user)
             return redirect(url_for("home"))
     return render_template(
         "signin.html",
         title = "SignIn",
+        form = f)
+
+
+
+
+@app.route("/signout", methods=("GET", "POST"))
+def signout():
+    f = SignUpForm()
+    if f.validate_on_submit():
+        user = f.get_authenticated_user()
+        if user:
+            login_user(user)
+            return redirect(url_for("home"))
+    return render_template(
+        "signout.html",
+        title = "SignOut",
         form = f)
 
 @app.route("/logout")
