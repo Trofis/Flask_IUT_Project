@@ -1,6 +1,6 @@
 from .app import app, db
 from flask import render_template, request
-from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear
+from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer
 
 @app.route("/")
 def home():
@@ -9,7 +9,12 @@ def home():
         title = "Patronat & Mendes Musics",
         Albums = get_Albums())
 
-
+@app.route("/profil")
+def profil():
+    if current_user.is_authenticated:
+        user = get_UserData(current_user.username)
+        listen = get_ListenAlbumUSer(current_user.username)
+        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = listen)
 
 
 

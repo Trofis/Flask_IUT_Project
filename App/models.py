@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     id      = db.Column(db.Integer, primary_key = True)
     username    = db.Column(db.String(100))
     password    = db.Column(db.String(100))
+    imgProfil   = db.Column(db.String(100))
     typeUSer = db.Column(db.String(100))
 
     def get_id(self):
@@ -55,7 +56,15 @@ class Album(db.Model):
 
 
 
+def get_UserData(name):
+    return User.query.filter_by(username=name).first()
 
+def get_ListenAlbumUSer(name):
+    result = db.engine.execute('select img from Album natural join Listen natural join User where username ="'+name+'"')
+    names = []
+    for row in result:
+        names.append(row)
+    return names
 def get_Albums():
     return Album.query.all()
 
