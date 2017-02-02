@@ -25,7 +25,7 @@
               <li><a href="SearchAlbum">SearchAlbum</a></li>
 
               {% if current_user.is_authenticated %}
-              <li><a href="#">{{current_user.username}}</a></li>
+              <li><a href="profil">{{current_user.username}}</a></li>
               <li><a href="{{ url_for('logout')}}"><span class="glyphicon glyphicon-log-out" title="Logout"></span></a></li>
               {% else %}
               <li><a href="signin">SignIn</a></li>
