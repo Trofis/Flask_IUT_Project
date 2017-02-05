@@ -59,10 +59,10 @@ def loaddb(filename):
 
 
 @manager.command
-def addUser(_login, _password, _type):
-    "parameters : login, password, type"
+def addUser(_username, _password, _type):
+    "parameters : username, password, type"
     from .models import User
-    user = User(login=_login, password=_password,typeUSer = _type )
+    user = User(username=_username, password=_password,typeUSer = _type )
     db.session.add(user)
     db.session.commit()
 
@@ -113,3 +113,30 @@ def addAlbum(_author_id, _player_id, _genre, _titre, _image, _year ):
         db.session.commit()
     else:
         print("Author or Player does not exist")
+
+
+@manager.command
+def syncdb():
+    db.create_all()
+
+
+@manager.command
+def newuser(username,password, type):
+    "parameters : username, password, type"
+    from .models import User
+    from hashlib import sha256
+    m = sha256()
+    m.update(password.encode())
+    u = User(username=username, password=m.hexdigest(), typeUSer=type)
+    db.session.add(u)
+    db.session.commit()
+
+
+@manager.command
+def modifUser(username, password, type):
+    "parameters : username, password, type"
+    from .models import User
+    from hashlib import sha256
+    m = sha256()
+    m.update(password.encode())
+    u = db.engine.execute("Update User set password = ? and typeUSer = ? where username=?", (str(password)),(str(type)), (str(username)))

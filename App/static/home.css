@@ -63,3 +63,17 @@ body
 footer> div >.text-muted{
   color:white;
 }
+
+#cont{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#overlay_image{
+    position: absolute;
+    bottom: 10px;
+    right: 42%;
+    width: 30px;
+    height: 30px;
+}

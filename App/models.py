@@ -1,5 +1,6 @@
 from .app import db
 from sqlalchemy import text
+from flask_login import UserMixin
 
 class Author(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
@@ -13,11 +14,15 @@ class Genre(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
     nameG    = db.Column(db.String(100))
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id      = db.Column(db.Integer, primary_key = True)
-    login    = db.Column(db.String(100))
+    username    = db.Column(db.String(100))
     password    = db.Column(db.String(100))
+    imgProfil   = db.Column(db.String(100))
     typeUSer = db.Column(db.String(100))
+
+    def get_id(self):
+        return self.id
 
 class Appartient(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
@@ -50,8 +55,24 @@ class Album(db.Model):
     player = db.relationship("Player", backref = db.backref("album", lazy ="dynamic"))
 
 
+def setLike(idAlb, idUSer):
+    o = Listen(
+        user_id = idUSer,
+        album_id = idAlb    
+    )
+    db.session.add(o)
+    db.session.commit()
 
 
+def get_UserData(name):
+    return User.query.filter_by(username=name).first()
+
+def get_ListenAlbumUSer(name):
+    result = db.engine.execute('select img from Album natural join Listen natural join User where username ="'+name+'"')
+    names = []
+    for row in result:
+        names.append(row)
+    return names
 def get_Albums():
     return Album.query.all()
 
@@ -78,3 +99,10 @@ def get_AlbumsByGenreByYear(genre, year):
     for row in result:
         names.append(row)
     return names
+
+
+from .app import login_manager
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(username)

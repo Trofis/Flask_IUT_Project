@@ -4,8 +4,16 @@
   <div class="grid">
       {% for a in Albums %}
         <div class="col-xs-6 col-lg-4">
+            <div id="cont">
               <h2>{{a["title"]}}</h2>
-              <img src="static/images/{{a.img}}" alt="" onerror="this.src='../static/INF.jpg'"/>
+              <div id="main_image">
+                <img src="static/images/{{a.img}}" alt="" onerror="this.src='../static/INF.jpg'"/>
+              </div>
+              <div id="overlay_image">
+                <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{a['id']}}, {{current_user.id}}, 'home.html')"/>
+              </div>
+            </div>
+
         </div>
 
 

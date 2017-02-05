@@ -3,7 +3,9 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
-
+<link rel="stylesheet" href="{{ url_for('static', filename = 'style_tut.css')}}">
+<script src="../static/alert_tut.js"></script>
+<script src="../static/like.js"></script>
 {% endblock %}
 {% block navbar %}
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -22,9 +24,15 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li><a href="SearchAlbum">SearchAlbum</a></li>
+
+              {% if current_user.is_authenticated %}
+              <li><a href="profil">{{current_user.username}}</a></li>
+              <li><a href="{{ url_for('logout')}}"><span class="glyphicon glyphicon-log-out" title="Logout"></span></a></li>
+              {% else %}
               <li><a href="signin">SignIn</a></li>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">Help</a></li>
+              <li><a href="signout">SignOut</a></li>
+              {% endif %}
+
             </ul>
           <form class="navbar-form navbar-right">
             <input class="form-control" placeholder="Search Music..." type="text">

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="container" onload="photo()">
+  <div class="jumbotron">
+    <h1>{{Pseudo}}</h1>
+    <img src="../static/ProfilImage/{{imgprofil}}" onerror="this.src='../static/INF.jpg'" />
+  </div>
+  <h2>Albums liked :</h2>
+
+  <div id="slider">
+    <img src="{{lImg[0]}}" id="image" onerror="this.src='../static/INF.jpg'">
+    <div class="left_hold"><img onClick="photo(-1)" class="left" src="../static/arrow_left.png"></div>
+    <div class="right_hold"><img onClick="photo(1)" class="right" src="../static/arrow_right.png"></div>
+  </div>
+</div>
+
+
+
+{% endblock %}
