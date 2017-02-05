@@ -55,6 +55,14 @@ class Album(db.Model):
     player = db.relationship("Player", backref = db.backref("album", lazy ="dynamic"))
 
 
+def setLike(idAlb, idUSer):
+    o = Listen(
+        user_id = idUSer,
+        album_id = idAlb    
+    )
+    db.session.add(o)
+    db.session.commit()
+
 
 def get_UserData(name):
     return User.query.filter_by(username=name).first()

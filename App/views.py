@@ -1,9 +1,14 @@
 from .app import app, db
 from flask import render_template, request
-from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer
+from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def home():
+    print("home")
+    if request.method == "POST":
+        idAlb = request.values["albumId"]
+        idUser = request.values["userId"]
+        setLike(idAlb, idUser)
     return render_template(
         "home.html",
         title = "Patronat & Mendes Musics",

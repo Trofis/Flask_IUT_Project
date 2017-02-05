@@ -1,15 +1,31 @@
+// 
+// if (document.addEventListener ){
+//     document.addEventListener("click", function(event){
+//         var targetElement = event.target || event.srcElement;
+//         targetElement.setAttribute("id", "liked")
+//     });
+
 function like(album_id, user_id, page)
 {
   div = document.getElementById("main");
   var alert = document.createElement("div");
   alert.setAttribute("class","alert alert-success");
   alert.setAttribute("role","alert");
-  alert.textContent = "Texte ajouté !";
-  div.insertBefore(alert, document.getElementById("zic")));
+  alert.setAttribute("id","alert");
+  alert.textContent = "Album liké !";
+  div.insertBefore(alert, document.getElementsByClassName('grid')[0]);
 
   var http = new XMLHttpRequest();
-  var url = page;
-  var params = "albumId=+"album_id+"&userId="+user_id+"";
+  if (page == "home.html")
+  {
+    var url = "/";
+  }
+  else
+  {
+    var url = page;
+
+  }
+  var params = "albumId="+album_id+"&userId="+user_id+"";
   http.open("POST", url, true);
 
   //Send the proper header information along with the request
@@ -21,4 +37,13 @@ function like(album_id, user_id, page)
   //     }
   // }
   http.send(params);
+
+  setTimeout(destroy,1000);
+
+}
+
+function destroy()
+{
+  elem = document.getElementById("main");
+  elem.removeChild(document.getElementById('alert'));
 }
