@@ -4,7 +4,6 @@ from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreB
 
 @app.route("/", methods=["POST", "GET"])
 def home():
-    print("home")
     if request.method == "POST":
         idAlb = request.values["albumId"]
         idUser = request.values["userId"]
@@ -33,7 +32,9 @@ def searchAlb():
         typeR="POST"
         alb = []
         fil = request.form.getlist("filter")
-
+        idAlb = request.values["albumId"]
+        idUser = request.values["userId"]
+        setLike(idAlb, idUser)
         if request.form.getlist('filter'):
             if ("genre" in request.form["filter"] and "year" in request.form.getlist("filter")):
                 opt = request.form['genre']
@@ -64,7 +65,6 @@ def searchAlb():
         alb = get_Albums()
         fil = []
     year = [str(2017-i) for i in range(0,40)]
-    print(request.form.getlist("filter"))
 
     return render_template(
         "SearchAlbum.html",

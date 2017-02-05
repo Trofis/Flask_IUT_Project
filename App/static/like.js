@@ -1,4 +1,4 @@
-// 
+//
 // if (document.addEventListener ){
 //     document.addEventListener("click", function(event){
 //         var targetElement = event.target || event.srcElement;
@@ -13,8 +13,10 @@ function like(album_id, user_id, page)
   alert.setAttribute("role","alert");
   alert.setAttribute("id","alert");
   alert.textContent = "Album liké !";
-  div.insertBefore(alert, document.getElementsByClassName('grid')[0]);
-
+  if (page == "home.html")
+    div.insertBefore(alert, document.getElementsByClassName('grid')[0]);
+  else if (page == "SearchAlbum")
+    div.insertBefore(alert, document.getElementById('SearchContain'));
   var http = new XMLHttpRequest();
   if (page == "home.html")
   {
