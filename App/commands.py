@@ -137,6 +137,9 @@ def modifUser(username, password, type):
     "parameters : username, password, type"
     from .models import User
     from hashlib import sha256
+    u = db.execute("Update User set password = ? and type = ? where username=?", (str(password)),)
     m = sha256()
     m.update(password.encode())
-    u = db.engine.execute("Update User set password = ? and typeUSer = ? where username=?", (str(password)),(str(type)), (str(username)))
+    newU = User(username=username, password=m.hexdigest(), typeUSer=type)
+    db.session.add(newU)
+    db.session.commit()

@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 {% block main %}
   <h1>{{title}}</h1>
-  <div class="grid">
+  <div class="grid" id="grid">
       {% for a in Albums %}
         <div class="col-xs-6 col-lg-4">
             <div id="cont">
               <h2>{{a["title"]}}</h2>
               <div id="main_image">
-                <img src="static/images/{{a.img}}" alt="" onerror="this.src='../static/INF.jpg'"/>
+                <a href="album/{{a.title}}">
+                  <img src="static/images/{{a.img}}" alt="" onerror="this.src='../static/INF.jpg'"/>
+
+                </a>
               </div>
               <div id="overlay_image">
-                <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{a['id']}}, {{current_user.id}}, 'home.html')"/>
+                {% if current_user.is_authenticated %}
+                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{a['id']}}, {{current_user.id}}, 'home')"/>
+                {% else %}
+                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:likeAlt({{a['id']}}, 'SearchAlbum')"/>
+                {% endif %}
               </div>
             </div>
 

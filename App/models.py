@@ -60,20 +60,26 @@ def setLike(idAlb, idUSer):
         user_id = idUSer,
         album_id = idAlb
     )
+    print(idAlb)
+    print(idUSer)
     print(len(Listen.query.filter_by(user_id=idUSer, album_id=idAlb).all()))
     if (len(Listen.query.filter_by(user_id=idUSer, album_id=idAlb).all()) == 0):
         db.session.add(o)
         db.session.commit()
 
 
+def get_AlbumsDataByUsername(name):
+    return Album.query.filter_by(title=name).first()
+
 def get_UserData(name):
     return User.query.filter_by(username=name).first()
 
-def get_ListenAlbumUSer(name):
-    result = db.engine.execute('select img from Album natural join Listen natural join User where username ="'+name+'"')
+def get_ListenAlbumUSer(username):
+    result = db.engine.execute('select img from Listen natural join User natural join Album where username ="'+username+'"')
     names = []
     for row in result:
         names.append(row[0])
+        print(row)
     return names
 def get_Albums():
     return Album.query.all()

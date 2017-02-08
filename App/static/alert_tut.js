@@ -1,8 +1,10 @@
 var indice = 0
-function photo(lImage,x, max) {
+function photo(lImage,x) {
 		// givig the value of time the samfunction below starts the loop
 	var image = document.getElementById('image');
-	if(x > max){indice = max;}
-	if(indice == 0){indice = 0;}
-	image.src = lImage[indice];
+	if(x == 1 && indice == max){indice = max;}
+	if(indice == 0 && x == -1){indice = 0;}
+	else{indice += x;}
+	res = "static/images/"+lImage[indice];
+	image.setAttribute("src", res);
 }

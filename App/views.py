@@ -1,6 +1,6 @@
 from .app import app, db
 from flask import render_template, request
-from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike
+from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike, get_AlbumsDataByUsername
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -11,18 +11,21 @@ def home():
     return render_template(
         "home.html",
         title = "Patronat & Mendes Musics",
-        Albums = get_Albums())
+        Albums = get_Albums(),
+        basealb=get_Albums())
 
 @app.route("/profil")
 def profil():
     if current_user.is_authenticated:
         user = get_UserData(current_user.username)
         listen = get_ListenAlbumUSer(current_user.username)
-        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = listen)
 
+        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = listen, basealb=get_Albums())
 
-
-
+@app.route("/album/<string:title>")
+def albumpage(title):
+    album = get_AlbumsDataByUsername(title)
+    return render_template("albumpage.html", albumInfo=album, basealb=get_Albums() )
 @app.route("/SearchAlbum", methods=["POST", "GET"])
 def searchAlb():
     gen = ""
@@ -77,7 +80,8 @@ def searchAlb():
         years= year,
         typeR=typeR,
         genreI=g,
-        yearI=y)
+        yearI=y,
+        basealb=get_Albums())
 
 
 #---------------------------LoginForm-----------------------------#
@@ -131,7 +135,8 @@ def signin():
     return render_template(
         "signin.html",
         title = "SignIn",
-        form = f)
+        form = f,
+        basealb=get_Albums())
 
 
 
@@ -147,7 +152,8 @@ def signout():
     return render_template(
         "signout.html",
         title = "SignOut",
-        form = f)
+        form = f,
+        basealb=get_Albums())
 
 @app.route("/logout")
 def logout():
