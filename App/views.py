@@ -31,11 +31,16 @@ def searchAlb():
     if request.method == "POST":
         typeR="POST"
         alb = []
+
         fil = request.form.getlist("filter")
-        idAlb = request.values["albumId"]
-        idUser = request.values["userId"]
-        setLike(idAlb, idUser)
+
+        if (request.form.getlist("albumId")):
+            idAlb = request.values["albumId"]
+            idUser = request.values["userId"]
+            setLike(idAlb, idUser)
+
         if request.form.getlist('filter'):
+
             if ("genre" in request.form["filter"] and "year" in request.form.getlist("filter")):
                 opt = request.form['genre']
                 yea = request.form['year']
@@ -56,9 +61,6 @@ def searchAlb():
                 y = True
                 yea = request.form['year']
                 alb = get_AlbumsByYear(yea)
-
-
-
 
     else:
         typeR="GET"

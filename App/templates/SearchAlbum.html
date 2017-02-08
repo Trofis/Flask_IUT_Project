@@ -51,18 +51,18 @@
                 <h2>{{alb[0]}}</h2>
 
                 <div id="main_image">
-                  <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+                  <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg'"/>
 
                 </div>
                 <div id="overlay_image">
-                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{a['id']}}, {{current_user.id}}, 'SearchAlbum')"/>
+                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{alb['id']}}, {{current_user.id}}, 'SearchAlbum')"/>
                 </div>
 
               {% else %}
               <h2>{{alb.title}}</h2>
 
               <div id="main_image">
-                <img src="static/images/{{alb.img}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
+                <img src="static/images/{{alb.img}}" alt="img" onerror="this.src='../static/INF.jpg'"/>
 
               </div>
               <div id="overlay_image">
