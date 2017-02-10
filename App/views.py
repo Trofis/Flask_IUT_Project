@@ -34,12 +34,12 @@ def albumpage(title):
 
 @app.route("/addAlbum", methods=["POST", "GET"])
 def addAlbum():
-    if current_user.is_authenticated && current_user.typeUSer == "admin":
+    if current_user.is_authenticated and current_user.typeUSer == "admin":
         lGenre = get_Genre()
         lCompo = get_Author()
         lArt = get_Player()
         if request.method == "GET":
-            return render_template("addAlbum.html", title="AddAlbum", basealb=get_Albums(), genre=lGenre, artiste=lArt, compositeur=lCompo )
+            return render_template("addAlbum.html", title="AddAlbum", basealb=get_Albums(), genre=lGenre, artiste=lArt, compositeur=lCompo, error="")
 
         else:
             gen = request.values["genre"]
@@ -53,6 +53,8 @@ def addAlbum():
             else:
                 insertAlbum(gen, title, year, compo, art)
                 return redirect("/")
+
+
 
 
 @app.route("/album/album/<string:title>")

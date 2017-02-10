@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block main %}
+
+<script type="text/javascript">
+function validateTitle() {
+  var x = document.getElementById('Title');
+  var div = document.getElementById("divTitle")
+  if (x.checkValidity() == true) {
+      x.setAttribute("aria-describedby", "inputSuccess2Status")
+      div.setAttribute("class", "form-group has-success has-feedback ")
+  }
+  else
+  {
+      x.setAttribute("aria-describedby", "inputError5Status")
+      div.setAttribute("class", "form-group has-error has-feedback ")
+  }
+}
+
+function validateYear() {
+  var x = document.getElementById('year');
+  var div = document.getElementById("divYear")
+  if (x.checkValidity() == true) {
+      x.setAttribute("aria-describedby", "inputSuccess2Status")
+      div.setAttribute("class", "form-group has-success has-feedback ")
+  }
+  else
+  {
+      x.setAttribute("aria-describedby", "inputError5Status")
+      div.setAttribute("class", "form-group has-error has-feedback ")
+  }
+}
+</script>
+{% if error != "" %}
+<div class="alert-danger alert">
+  <p>
+    {{error}}
+  </p>
+</div>
+{% endif %}
+<h2>Ajouter album :</h2>
+<form id="form" name="form" class="form-group" action="addAlbum" method="post">
+  <div id="divTitle">
+    <label for="Title">Titre :</label>
+
+    <input class="form-control" type="text" name="title" value="" id="Title" pattern="[A-Z]{1}[a-zA-Z]{0,15}$"  onchange="validateTitle()" >
+  </div>
+  <div id="divYear">
+    <label  for="year">Année de sortie :</label>
+    <input class="form-control" type="text" name="year" pattern="[1-9]{4}" value="" id="year" onchange="validateYear()">
+  </div>
+
+  <label for="genre">Genre :</label>
+  <select class="form-control" name="genre" id="genre">
+    {% for g in genre %}
+      <option value="{{g.id}}">{{g.nameG}}</option>
+    {% endfor %}
+  </select>
+  <label for="artiste">Artiste :</label>
+  <select class="form-control" name="artiste" id="artiste">
+    {% for a in artiste %}
+      <option value="{{a.id}}">{{a.nameP}}</option>
+    {% endfor %}
+  </select>
+  <label for="compositeur">Compositeur :</label>
+  <select class="form-control" name="compositeur" id="compositeur">
+    {% for c in compositeur %}
+      <option value="{{c.id}}">{{c.nameA}}</option>
+    {% endfor %}
+  </select>
+
+  <input class="btn btn-primary" type="submit" value="Ajouter">
+</form>
+
+
+
+{% endblock %}
