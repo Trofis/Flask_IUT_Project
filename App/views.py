@@ -54,8 +54,17 @@ def addAlbum():
                 insertAlbum(gen, title, year, compo, art)
                 return redirect("/")
 
+@app.route("/supprAlbum", methods=["POST","GET"])
+def supprAlbum():
+    if current_user.is_authenticated and current_user.typeUSer == "admin":
+        lAlb = get_Albums()
+        if request.method == "GET":
+            return render_template("supprAlbum.html", title="AddAlbum", basealb=get_Albums(), album=lAlb)
 
-
+        else:
+            idAlb = request.values["album"]
+            deleteAlbum(idAlb)
+            return redirect("/")
 
 @app.route("/album/album/<string:title>")
 def albumpageCorrect(title):

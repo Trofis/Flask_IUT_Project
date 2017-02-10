@@ -84,7 +84,11 @@ def insertAlbum(gen, title, year, compo, art):
     db.session.add(a)
 
     db.session.commit()
-
+def deleteAlbum(idAlb):
+    Appartient.query.filter_by(album_id=idAlb).delete()
+    Listen.query.filter_by(album_id=idAlb).delete()
+    Album.query.filter_by(id=idAlb).delete()
+    db.session.commit()
 def get_Artiste(title):
     try:
         resultId = db.engine.execute('select player_id from Album where title="'+title+'"').first();

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block main %}
+<h2>Ajouter album :</h2>
+<form class="form-group" action="supprAlbum" method="post">
+  <label for="album">Supprimer album :</label>
+  <select class="form-control" name="album" id="album">
+    {% for a in album %}
+      <option value="{{a.id}}">{{a.title}}</option>
+    {% endfor %}
+  </select>
+  <input class="btn btn-primary" type="submit"  value="Supprimer">
+</form>
+{% endblock %}
