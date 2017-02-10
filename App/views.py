@@ -10,7 +10,7 @@ def home():
         setLike(idAlb, idUser)
     return render_template(
         "home.html",
-        title = "Patronat & Mendes Musics",
+        title = "Home",
         Albums = get_Albums(),
         basealb=get_Albums())
 
@@ -76,7 +76,7 @@ def searchAlb():
                 if (opt is not None):
                     alb = get_AlbumsByGenre(opt)
                     print(alb)
-                    
+
                     gen = opt
             elif ("year" in request.form["filter"]):
                 y = True
