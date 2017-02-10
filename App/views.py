@@ -1,6 +1,6 @@
 from .app import app, db
 from flask import render_template, request
-from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike, get_AlbumsDataByUsername, get_Compo, get_Artiste, get_genreAlb
+from .models import *
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -10,18 +10,23 @@ def home():
         setLike(idAlb, idUser)
     return render_template(
         "home.html",
-        title = "Patronat & Mendes Musics",
+        title = "Home",
         Albums = get_Albums(),
         basealb=get_Albums())
 
 @app.route("/profil")
 def profil():
     if current_user.is_authenticated:
-        user = get_UserData(current_user.username)
-        listen = get_ListenAlbumUSer(current_user.username)
-        for elem in listen:
-            print(elem)
-        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = listen, basealb=get_Albums())
+        user = get_UserData(current_user.id)
+        listen = get_ListenAlbumUSer(current_user.id)
+        img = []
+        titles = []
+        for cle, valeur in listen.items():
+            img.append(cle)
+            titles.append(valeur)
+        print(img)
+        print(titles)
+        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = img, titles=titles, basealb=get_Albums())
 
 @app.route("/album/<string:title>")
 def albumpage(title):
@@ -30,9 +35,41 @@ def albumpage(title):
     artiste =get_Artiste(title)
 
     genre =get_genreAlb(title)
-    print(genre)
     return render_template("albumpage.html", albumInfo=album, basealb=get_Albums(), compo= compo, artiste=artiste, genre=genre )
 
+@app.route("/addAlbum", methods=["POST", "GET"])
+def addAlbum():
+    if current_user.is_authenticated and current_user.typeUSer == "admin":
+        lGenre = get_Genre()
+        lCompo = get_Author()
+        lArt = get_Player()
+        if request.method == "GET":
+            return render_template("addAlbum.html", title="AddAlbum", basealb=get_Albums(), genre=lGenre, artiste=lArt, compositeur=lCompo, error="")
+
+        else:
+            gen = request.values["genre"]
+            title = request.values["title"]
+            year = request.values["year"]
+            compo = request.values["compositeur"]
+            art = request.values["artiste"]
+
+            if (ifAlbumExist(title, compo, art)):
+                return render_template("addAlbum.html", title="AddAlbum", basealb=get_Albums(), error = "Album already in base", genre=lGenre, artiste=lArt, compositeur=lCompo)
+            else:
+                insertAlbum(gen, title, year, compo, art)
+                return redirect("/")
+
+@app.route("/supprAlbum", methods=["POST","GET"])
+def supprAlbum():
+    if current_user.is_authenticated and current_user.typeUSer == "admin":
+        lAlb = get_Albums()
+        if request.method == "GET":
+            return render_template("supprAlbum.html", title="AddAlbum", basealb=get_Albums(), album=lAlb)
+
+        else:
+            idAlb = request.values["album"]
+            deleteAlbum(idAlb)
+            return redirect("/")
 
 @app.route("/album/album/<string:title>")
 def albumpageCorrect(title):
@@ -76,7 +113,7 @@ def searchAlb():
                 if (opt is not None):
                     alb = get_AlbumsByGenre(opt)
                     print(alb)
-                    
+
                     gen = opt
             elif ("year" in request.form["filter"]):
                 y = True
@@ -91,7 +128,7 @@ def searchAlb():
 
     return render_template(
         "SearchAlbum.html",
-        title = "SearchAlbum",
+        title = "Chercher album",
         Albums = alb,
         genreAct = gen,
         genre= get_Genre(),

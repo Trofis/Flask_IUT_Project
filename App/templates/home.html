@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block main %}
-  <h1>{{title}}</h1>
+<div class="jumbotron">
+  <h1>Welcome to Beezer !</h1>
+  <p class="lead">
+    Allez découvrir les dernières tendances !
+  </p>
+</div>
   <div class="grid" id="grid">
       {% for a in Albums %}
         <div class="col-xs-6 col-lg-4">

@@ -17,10 +17,10 @@
         </p>
       </div>
     {% else %}
-
+      <h3 id="h3forimg">{{titles[0]}}</h3>
       <img src="../static/images/{{lImg[0]}}" id="image" alt="" onerror="this.src='../static/INF.jpg'">
-      <div class="left_hold"><img onClick="photo({{lImg}},-1)" class="left" src="../static/arrow_left.png"></div>
-      <div class="right_hold"><img onClick="photo({{lImg}},1)" class="right" src="../static/arrow_right.png"></div>
+      <div class="left_hold"><img onClick="photo({{lImg}},-1, {{titles}})" class="left" src="../static/arrow_left.png"></div>
+      <div class="right_hold"><img onClick="photo({{lImg}},1, {{titles}})" class="right" src="../static/arrow_right.png"></div>
     {% endif %}
   </div>
 </div>

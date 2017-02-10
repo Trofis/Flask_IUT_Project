@@ -1,7 +1,9 @@
-Insert nouveau album :
-	- Recupérer data dans vue
-	- recuperer id d'artiste puis compositeur (si il n'existe pas)		
-		- Dans le cas où ça n'existe pas tu créer l'objet et tu l'insert dans la bd
-		- refaire requete pour get l'id
-	- créer l'Album et l'insert dans la bd
-	- créer Appartient pour chaque genre d'album
+Pour lancer l'application, il suffit de lancer ./manage runserver (Pensez à faire la commande source venv/bin/activate)
+D'ailleurs, vous pouvez y retrouver plusieurs commandes pour insérer des données dans la base de donnée.
+Si vous voulez charger une nouvelle base de donnée à partir du fichier .yml alb (version petite) ou album(version complète), entrez la commande : ./lanage loaddb App/<fichier.yml>
+
+Sur le site vous pouvez y retrouver des albums, vous créer un compte, rechercher un album et faire des tri selon plusieurs critères : genre et année de sortie.
+Vous pouvez notamment aimer des albums et les retrouver sur votre profil.
+
+Attention lorsque vous créez un compte sur le site web vous ne serez pas admin et vous ne pourrez pas bénéficier des modules ajouter album et supprimer album.
+Pour se créer un compte admin aller dans votre console et taper "./manage.py newUser <username> <password> <typeUser>(admin ou non) <nom fichier image profil> (optionnel)"

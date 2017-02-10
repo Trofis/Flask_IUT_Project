@@ -25,19 +25,28 @@
 
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ url_for('searchAlb')}}">SearchAlbum</a></li>
-
+              <li><a href="{{ url_for('searchAlb')}}">Recherche album</a></li>
+              {% if current_user.is_authenticated and current_user.typeUSer == "admin" %}
+              <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">Pages admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                              <li><a href="{{ url_for('addAlbum')}}">Ajouter album</a></li>
+                              <li><a href="{{ url_for('supprAlbum')}}">Supprimer album</a></li>
+                </ul>
+              </li>
+              {% endif %}
               {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('profil')}}">{{current_user.username}}</a></li>
               <li><a href="{{ url_for('logout')}}"><span class="glyphicon glyphicon-log-out" title="Logout"></span></a></li>
               {% else %}
-              <li><a href="{{ url_for('signin')}}">SignIn</a></li>
-              <li><a href="{{ url_for('signout')}}">SignOut</a></li>
+              <li><a href="{{ url_for('signin')}}">Se connecter</a></li>
+              <li><a href="{{ url_for('signout')}}">S'inscrire</a></li>
               {% endif %}
+
 
             </ul>
           <form id="SearchForm" class="navbar-form navbar-right form-group" action="/">
-            <input class="form-control" placeholder="Search Album..." type="text" list="Albums" onkeyup="searchForm()" onclick="searchForm()">
+            <input class="form-control" placeholder="Album ..." type="text" list="Albums" onkeyup="searchForm()" onclick="searchForm()">
           </form>
 
           <datalist id="Albums">
@@ -54,7 +63,12 @@
 {% endblock %}
 {% block content %}
 <div id ="main" class="container theme-showcase" role="main">
+
   {% block main %}{% endblock %}
+
+</div>
+
+<div class="footerMAr">
 
 </div>
 <!-- <footer class="footer">

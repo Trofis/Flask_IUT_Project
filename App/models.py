@@ -55,6 +55,12 @@ class Album(db.Model):
     player = db.relationship("Player", backref = db.backref("album", lazy ="dynamic"))
 
 
+def get_Player():
+    return Player.query.all()
+
+def get_Author():
+    return Author.query.all()
+
 def get_Compo(title):
     try:
         resultIdCompo = db.engine.execute('select author_id from Album where title="'+title+'"').first();
@@ -64,8 +70,25 @@ def get_Compo(title):
         return result
     except Exception as e:
         return None
+def ifAlbumExist(title, compo, art):
+    if (Album.query.filter_by(title=title,author_id=compo, player_id=art).first() != None):
+        return True
+    return False
 
+def insertAlbum(gen, title, year, compo, art):
+    from sqlalchemy.sql.expression import func
+    id = db.session.query(func.max(Album.id))[0][0] + 1
+    o = Album(id = id, title = title, year = year, author_id=compo, player_id=art)
+    a = Appartient(album_id=id, genre_id=gen)
+    db.session.add(o)
+    db.session.add(a)
 
+    db.session.commit()
+def deleteAlbum(idAlb):
+    Appartient.query.filter_by(album_id=idAlb).delete()
+    Listen.query.filter_by(album_id=idAlb).delete()
+    Album.query.filter_by(id=idAlb).delete()
+    db.session.commit()
 def get_Artiste(title):
     try:
         resultId = db.engine.execute('select player_id from Album where title="'+title+'"').first();
@@ -87,9 +110,6 @@ def setLike(idAlb, idUSer):
         user_id = idUSer,
         album_id = idAlb
     )
-    print(idAlb)
-    print(idUSer)
-    print(len(Listen.query.filter_by(user_id=idUSer, album_id=idAlb).all()))
     if (len(Listen.query.filter_by(user_id=idUSer, album_id=idAlb).all()) == 0):
         db.session.add(o)
         db.session.commit()
@@ -98,22 +118,21 @@ def setLike(idAlb, idUSer):
 def get_AlbumsDataByUsername(name):
     return Album.query.filter_by(title=name).first()
 
-def get_UserData(name):
-    return User.query.filter_by(username=name).first()
+def get_UserData(id):
+    return User.query.filter_by(id=id).first()
 
-def get_ListenAlbumUSer(username):
-    idUser = get_UserData(username).id
-    resultListen = db.engine.execute('select album_id from Listen where user_id="'+str(idUser)+'"');
+def get_ListenAlbumUSer(id):
+    resultListen = db.engine.execute('select album_id from Listen where user_id="'+str(id)+'"');
     result = []
     i= 0
     for elem in resultListen:
-        q = db.engine.execute('select img from Album where id ="'+str(elem[0])+'"')
+        q = db.engine.execute('select title, img from Album where id ="'+str(elem[0])+'"')
         for row in q:
             result.append(row)
-    names = []
+    names = {}
+
     for row in result:
-        names.append(row[0])
-    print(names)
+        names[row[1]] = row[0]
     return names
 def get_Albums():
     return Album.query.all()
