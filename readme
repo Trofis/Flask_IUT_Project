@@ -7,3 +7,7 @@ Vous pouvez notamment aimer des albums et les retrouver sur votre profil.
 
 Attention lorsque vous créez un compte sur le site web vous ne serez pas admin et vous ne pourrez pas bénéficier des modules ajouter album et supprimer album.
 Pour se créer un compte admin aller dans votre console et taper "./manage.py newUser <username> <password> <typeUser>(admin ou non) <nom fichier image profil> (optionnel)"
+
+Les images de profils sont enregistrés dans le dossier profilImages du dossier static de App. Si vous voulez une image de profil soit faite la commande précédente si vous vous n'êtes pas inscrit sinon
+taper la commande "./manage modifUser <username> <new password>(mettez le même pour ne pas changer) <typeUSer> <nom fichier image>". Bien évidemment enregistrer l'image dans le dossier profilImages, sinon
+l'image ne s'affichera pas sur votre page de profil.
