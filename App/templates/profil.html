@@ -10,9 +10,18 @@
   <h2>Albums liked :</h2>
 
   <div id="slider">
-    <img src="../static/images/{{lImg[0]}}" id="image" alt="" onerror="this.src='../static/INF.jpg'">
-    <div class="left_hold"><img onClick="photo({{lImg}},-1)" class="left" src="../static/arrow_left.png"></div>
-    <div class="right_hold"><img onClick="photo({{lImg}},-1)" class="right" src="../static/arrow_right.png"></div>
+    {% if lImg == [] %}
+      <div class="alert alert-danger">
+        <p>
+          Vous n'avez pas d'albums liké
+        </p>
+      </div>
+    {% else %}
+
+      <img src="../static/images/{{lImg[0]}}" id="image" alt="" onerror="this.src='../static/INF.jpg'">
+      <div class="left_hold"><img onClick="photo({{lImg}},-1)" class="left" src="../static/arrow_left.png"></div>
+      <div class="right_hold"><img onClick="photo({{lImg}},1)" class="right" src="../static/arrow_right.png"></div>
+    {% endif %}
   </div>
 </div>
 

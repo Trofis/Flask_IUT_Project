@@ -55,6 +55,33 @@ class Album(db.Model):
     player = db.relationship("Player", backref = db.backref("album", lazy ="dynamic"))
 
 
+def get_Compo(title):
+    try:
+        resultIdCompo = db.engine.execute('select author_id from Album where title="'+title+'"').first();
+        print(resultIdCompo)
+        resultNameCompo = db.engine.execute('select nameA from Author where id="'+str(resultIdCompo[0])+'"').first();
+        result = resultNameCompo[0]
+        return result
+    except Exception as e:
+        return None
+
+
+def get_Artiste(title):
+    try:
+        resultId = db.engine.execute('select player_id from Album where title="'+title+'"').first();
+        resultName = db.engine.execute('select nameP from Player where id="'+str(resultId[0])+'"').first();
+        result = resultName[0]
+        return result
+    except Exception as e:
+        return None
+
+
+def get_genreAlb(title):
+    resultArt = db.engine.execute('select nameG from Album natural join Appartient natural join Genre where title="'+title+'"');
+    result = []
+    for row in resultArt:
+        result.append(row[0])
+    return result
 def setLike(idAlb, idUSer):
     o = Listen(
         user_id = idUSer,
@@ -75,11 +102,18 @@ def get_UserData(name):
     return User.query.filter_by(username=name).first()
 
 def get_ListenAlbumUSer(username):
-    result = db.engine.execute('select img from Listen natural join User natural join Album where username ="'+username+'"')
+    idUser = get_UserData(username).id
+    resultListen = db.engine.execute('select album_id from Listen where user_id="'+str(idUser)+'"');
+    result = []
+    i= 0
+    for elem in resultListen:
+        q = db.engine.execute('select img from Album where id ="'+str(elem[0])+'"')
+        for row in q:
+            result.append(row)
     names = []
     for row in result:
         names.append(row[0])
-        print(row)
+    print(names)
     return names
 def get_Albums():
     return Album.query.all()
@@ -93,20 +127,28 @@ def get_AlbumsByYear(y):
 def get_AlbumsByGenre(genre):
     #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
     #print(sql)
-    result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'"')
-    names = []
-    for row in result:
-        names.append(row)
-    return names
+    result = db.engine.execute('select album_id from Appartient natural join Genre where nameG="'+genre+'"')
+    alb = []
+    for idAlb in result:
+        alb.append(db.engine.execute('select title,img from Album where id ="'+str(idAlb[0])+'"'));
+    albResult = []
+    for row in alb:
+        for r in row:
+            albResult.append(r)
+    return albResult
 
 def get_AlbumsByGenreByYear(genre, year):
     #sql = text('select * from Album natural join Appartient natural join Genre where nameG = (1)', genre)
     #print(sql)
-    result = db.engine.execute('select title,img from Album natural join Appartient natural join Genre where nameG ="'+genre+'" and year ="'+year+'"')
-    names = []
-    for row in result:
-        names.append(row)
-    return names
+    result = db.engine.execute('select album_id from Appartient natural join Genre where nameG="'+genre+'"')
+    alb = []
+    for idAlb in result:
+        alb.append(db.engine.execute('select title,img from Album where year ="'+str(year)+'"  and id ="'+str(idAlb[0])+'"'));
+    albResult = []
+    for row in alb:
+        for r in row:
+            albResult.append(r)
+    return albResult
 
 
 from .app import login_manager

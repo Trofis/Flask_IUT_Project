@@ -10,14 +10,14 @@ def loaddb(filename):
     albums = yaml.load(open(filename))
 
     from .models import Album, Author, Genre, Player, Appartient
-
+    idAlb= 0
 
     author = {}
     player = {}
     gender = {}
     for m in albums:
-        a = m["by"]
-        p = m["parent"]
+        a = m["parent"]
+        p = m["by"]
         g = m["genre"]
         if a not in author:
             o = Author(nameA=a)
@@ -37,15 +37,18 @@ def loaddb(filename):
         db.session.commit()
 
     for m in albums:
-        a = author[m["by"]]
-        p = player[m["parent"]]
+        a = author[m["parent"]]
+        p = player[m["by"]]
         lg = m["genre"]
-        mus = Album(  title = m["title"],
+        mus = Album(
+                    id=idAlb,
+                    title = m["title"],
                     img = m["img"],
                     year = m["releaseYear"],
                     author_id = a.id,
                     player_id = p.id
                     )
+        idAlb += 1
         for g in lg:
             og = gender[g]
             o = Appartient(

@@ -1,6 +1,6 @@
 from .app import app, db
 from flask import render_template, request
-from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike, get_AlbumsDataByUsername
+from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike, get_AlbumsDataByUsername, get_Compo, get_Artiste, get_genreAlb
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -19,13 +19,29 @@ def profil():
     if current_user.is_authenticated:
         user = get_UserData(current_user.username)
         listen = get_ListenAlbumUSer(current_user.username)
-
+        for elem in listen:
+            print(elem)
         return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = listen, basealb=get_Albums())
 
 @app.route("/album/<string:title>")
 def albumpage(title):
     album = get_AlbumsDataByUsername(title)
-    return render_template("albumpage.html", albumInfo=album, basealb=get_Albums() )
+    compo = get_Compo(title)
+    artiste =get_Artiste(title)
+
+    genre =get_genreAlb(title)
+    print(genre)
+    return render_template("albumpage.html", albumInfo=album, basealb=get_Albums(), compo= compo, artiste=artiste, genre=genre )
+
+
+@app.route("/album/album/<string:title>")
+def albumpageCorrect(title):
+    album = get_AlbumsDataByUsername(title)
+    compo = get_Compo(title)
+    artiste =get_Artiste(title)
+    print(compo)
+    genre =get_genreAlb(title)
+    return redirect(url_for("albumpage", title=title))
 @app.route("/SearchAlbum", methods=["POST", "GET"])
 def searchAlb():
     gen = ""
@@ -59,6 +75,8 @@ def searchAlb():
                 opt = request.form['genre']
                 if (opt is not None):
                     alb = get_AlbumsByGenre(opt)
+                    print(alb)
+                    
                     gen = opt
             elif ("year" in request.form["filter"]):
                 y = True
