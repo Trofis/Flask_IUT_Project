@@ -128,7 +128,7 @@ def searchAlb():
 
     return render_template(
         "SearchAlbum.html",
-        title = "SearchAlbum",
+        title = "Chercher album",
         Albums = alb,
         genreAct = gen,
         genre= get_Genre(),

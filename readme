@@ -2,9 +2,8 @@ Pour lancer l'application, il suffit de lancer ./manage runserver (Pensez à fai
 D'ailleurs, vous pouvez y retrouver plusieurs commandes pour insérer des données dans la base de donnée.
 Si vous voulez charger une nouvelle base de donnée à partir du fichier .yml alb (version petite) ou album(version complète), entrez la commande : ./lanage loaddb App/<fichier.yml>
 
-Sur le site vous pouvez y retrouver des albums, vous pouvez y créer un compte, rechercher un album et faire des tries selon plusieurs critères : genre et année de sortie.
+Sur le site vous pouvez y retrouver des albums, vous créer un compte, rechercher un album et faire des tri selon plusieurs critères : genre et année de sortie.
 Vous pouvez notamment aimer des albums et les retrouver sur votre profil.
 
-A savoir que si vous créez un compte sur le site, ça sera un compte client ! 
-Pour avoir un compte administrateur il faut entrer la commande "./manage newuser username password 'admin'" --> Celui de base username : trofis / password : t
-Lorsqu vous avez un compte administrateur vous pouvez ajouter ou supprimer un album.
+Attention lorsque vous créez un compte sur le site web vous ne serez pas admin et vous ne pourrez pas bénéficier des modules ajouter album et supprimer album.
+Pour se créer un compte admin aller dans votre console et taper "./manage.py newUser <username> <password> <typeUser>(admin ou non) <nom fichier image profil> (optionnel)"

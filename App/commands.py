@@ -60,15 +60,6 @@ def loaddb(filename):
     db.session.commit()
 
 
-
-@manager.command
-def addUser(_username, _password, _type):
-    "parameters : username, password, type"
-    from .models import User
-    user = User(username=_username, password=_password,typeUSer = _type )
-    db.session.add(user)
-    db.session.commit()
-
 @manager.command
 def addGenreOrAuthorOrPlayer(name, typeCom):
     "parameters : name, type"
@@ -124,25 +115,30 @@ def syncdb():
 
 
 @manager.command
-def newuser(username,password, type):
-    "parameters : username, password, type"
+def newuser(username,password, type, img):
+    "parameters : username, password, type, image(optional)"
     from .models import User
     from hashlib import sha256
     m = sha256()
     m.update(password.encode())
-    u = User(username=username, password=m.hexdigest(), typeUSer=type)
+    if (img == ""):
+        u = User(username=username, password=m.hexdigest(), typeUSer=type)
+    else:
+        u = User(username=username, password=m.hexdigest(), typeUSer=type, imgProfil=img)
     db.session.add(u)
     db.session.commit()
 
 
 @manager.command
-def modifUser(username, password, type):
-    "parameters : username, password, type"
+def modifUser(username, password, type, img):
+    "parameters : username, new password, new type, new image(optional)"
     from .models import User
     from hashlib import sha256
-    u = db.execute("Update User set password = ? and type = ? where username=?", (str(password)),)
     m = sha256()
     m.update(password.encode())
-    newU = User(username=username, password=m.hexdigest(), typeUSer=type)
-    db.session.add(newU)
+    u = User.query.filter_by(username=username).first()
+    if img != "":
+        u.imgProfil=img
+    u.password = password
+    u.typeUSer=type
     db.session.commit()
