@@ -1,0 +1,7 @@
+Insert nouveau album :
+	- Recupérer data dans vue
+	- recuperer id d'artiste puis compositeur (si il n'existe pas)		
+		- Dans le cas où ça n'existe pas tu créer l'objet et tu l'insert dans la bd
+		- refaire requete pour get l'id
+	- créer l'Album et l'insert dans la bd
+	- créer Appartient pour chaque genre d'album
