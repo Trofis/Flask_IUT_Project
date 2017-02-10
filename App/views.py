@@ -1,6 +1,6 @@
 from .app import app, db
 from flask import render_template, request
-from .models import get_Albums, get_AlbumsByGenre, get_Genre, get_AlbumsByGenreByYear, get_AlbumsByYear, get_UserData, get_ListenAlbumUSer, setLike, get_AlbumsDataByUsername, get_Compo, get_Artiste, get_genreAlb
+from .models import *
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -30,8 +30,29 @@ def albumpage(title):
     artiste =get_Artiste(title)
 
     genre =get_genreAlb(title)
-    print(genre)
     return render_template("albumpage.html", albumInfo=album, basealb=get_Albums(), compo= compo, artiste=artiste, genre=genre )
+
+@app.route("/addAlbum", methods=["POST", "GET"])
+def addAlbum():
+    if current_user.is_authenticated && current_user.typeUSer == "admin":
+        lGenre = get_Genre()
+        lCompo = get_Author()
+        lArt = get_Player()
+        if request.method == "GET":
+            return render_template("addAlbum.html", title="AddAlbum", basealb=get_Albums(), genre=lGenre, artiste=lArt, compositeur=lCompo )
+
+        else:
+            gen = request.values["genre"]
+            title = request.values["title"]
+            year = request.values["year"]
+            compo = request.values["compositeur"]
+            art = request.values["artiste"]
+
+            if (ifAlbumExist(title, compo, art)):
+                return render_template("addAlbum.html", title="AddAlbum", basealb=get_Albums(), error = "Album already in base", genre=lGenre, artiste=lArt, compositeur=lCompo)
+            else:
+                insertAlbum(gen, title, year, compo, art)
+                return redirect("/")
 
 
 @app.route("/album/album/<string:title>")

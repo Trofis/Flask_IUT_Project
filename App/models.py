@@ -55,6 +55,12 @@ class Album(db.Model):
     player = db.relationship("Player", backref = db.backref("album", lazy ="dynamic"))
 
 
+def get_Player():
+    return Player.query.all()
+
+def get_Author():
+    return Author.query.all()
+
 def get_Compo(title):
     try:
         resultIdCompo = db.engine.execute('select author_id from Album where title="'+title+'"').first();
@@ -64,7 +70,20 @@ def get_Compo(title):
         return result
     except Exception as e:
         return None
+def ifAlbumExist(title, compo, art):
+    if (Album.query.filter_by(title=title,author_id=compo, player_id=art).first() != None):
+        return True
+    return False
 
+def insertAlbum(gen, title, year, compo, art):
+    from sqlalchemy.sql.expression import func
+    id = db.session.query(func.max(Album.id))[0][0] + 1
+    o = Album(id = id, title = title, year = year, author_id=compo, player_id=art)
+    a = Appartient(album_id=id, genre_id=gen)
+    db.session.add(o)
+    db.session.add(a)
+
+    db.session.commit()
 
 def get_Artiste(title):
     try:
@@ -87,9 +106,6 @@ def setLike(idAlb, idUSer):
         user_id = idUSer,
         album_id = idAlb
     )
-    print(idAlb)
-    print(idUSer)
-    print(len(Listen.query.filter_by(user_id=idUSer, album_id=idAlb).all()))
     if (len(Listen.query.filter_by(user_id=idUSer, album_id=idAlb).all()) == 0):
         db.session.add(o)
         db.session.commit()
