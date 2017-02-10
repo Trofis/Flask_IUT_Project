@@ -8,23 +8,23 @@
 	overflow:hidden;
 	}
 #image {
-	height:400px;
-	width:650px;
+
+	margin-left: 20%;
 	position:absolute;
 	}
 .left_hold {
-	height: 400px;
+	height: 300px;
 	width: 100px;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 }
 .right_hold {
-	height: 400px;
+	height: 300px;
 	width: 100px;
 	position: absolute;
 	top: 0px;
-	right: 0px;
+	right: 33%;
 }
 .left {
 	height:50px;

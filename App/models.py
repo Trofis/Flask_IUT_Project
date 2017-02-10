@@ -118,22 +118,21 @@ def setLike(idAlb, idUSer):
 def get_AlbumsDataByUsername(name):
     return Album.query.filter_by(title=name).first()
 
-def get_UserData(name):
-    return User.query.filter_by(username=name).first()
+def get_UserData(id):
+    return User.query.filter_by(id=id).first()
 
-def get_ListenAlbumUSer(username):
-    idUser = get_UserData(username).id
-    resultListen = db.engine.execute('select album_id from Listen where user_id="'+str(idUser)+'"');
+def get_ListenAlbumUSer(id):
+    resultListen = db.engine.execute('select album_id from Listen where user_id="'+str(id)+'"');
     result = []
     i= 0
     for elem in resultListen:
-        q = db.engine.execute('select img from Album where id ="'+str(elem[0])+'"')
+        q = db.engine.execute('select title, img from Album where id ="'+str(elem[0])+'"')
         for row in q:
             result.append(row)
-    names = []
+    names = {}
+
     for row in result:
-        names.append(row[0])
-    print(names)
+        names[row[1]] = row[0]
     return names
 def get_Albums():
     return Album.query.all()

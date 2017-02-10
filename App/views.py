@@ -17,11 +17,16 @@ def home():
 @app.route("/profil")
 def profil():
     if current_user.is_authenticated:
-        user = get_UserData(current_user.username)
-        listen = get_ListenAlbumUSer(current_user.username)
-        for elem in listen:
-            print(elem)
-        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = listen, basealb=get_Albums())
+        user = get_UserData(current_user.id)
+        listen = get_ListenAlbumUSer(current_user.id)
+        img = []
+        titles = []
+        for cle, valeur in listen.items():
+            img.append(cle)
+            titles.append(valeur)
+        print(img)
+        print(titles)
+        return render_template("profil.html", Pseudo = user.username, imgprofil= user.imgProfil, lImg = img, titles=titles, basealb=get_Albums())
 
 @app.route("/album/<string:title>")
 def albumpage(title):
