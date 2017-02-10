@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+<!-- {% block title %}
+album/{{title}}
+{% endblock %} -->
+{% block main %}
+<div class="container" >
+  <div class="jumbotron">
+    <h1>{{albumInfo.title}}</h1>
+    <img src="../static/images/{{albumInfo.img}}" onerror="this.src='../static/INF.jpg'" />
+  </div>
+  <h2>Albums infos :</h2>
+
+  <div>
+    <ul class="list-group">
+      <li class="list-group-item"> Année de sortie :  {{albumInfo.year}}</li>
+      <li class="list-group-item"> Compositeur : {{compo}}</li>
+      <li class="list-group-item"> Artiste : {{artiste}}</li>
+      {% for g in genre %}
+        <li class="list-group-item"> genre : {{g}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

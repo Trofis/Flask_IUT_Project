@@ -2,10 +2,12 @@
 {% block title %} {{ title }} {% endblock %}
 {% block styles %}
 {{ super() }}
+
 <link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
 <link rel="stylesheet" href="{{ url_for('static', filename = 'style_tut.css')}}">
 <script src="../static/alert_tut.js"></script>
 <script src="../static/like.js"></script>
+<script src="../static/searchForm.js"></script>
 {% endblock %}
 {% block navbar %}
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -23,20 +25,26 @@
 
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-              <li><a href="SearchAlbum">SearchAlbum</a></li>
+              <li><a href="{{ url_for('searchAlb')}}">SearchAlbum</a></li>
 
               {% if current_user.is_authenticated %}
-              <li><a href="profil">{{current_user.username}}</a></li>
+              <li><a href="{{ url_for('profil')}}">{{current_user.username}}</a></li>
               <li><a href="{{ url_for('logout')}}"><span class="glyphicon glyphicon-log-out" title="Logout"></span></a></li>
               {% else %}
-              <li><a href="signin">SignIn</a></li>
-              <li><a href="signout">SignOut</a></li>
+              <li><a href="{{ url_for('signin')}}">SignIn</a></li>
+              <li><a href="{{ url_for('signout')}}">SignOut</a></li>
               {% endif %}
 
             </ul>
-          <form class="navbar-form navbar-right">
-            <input class="form-control" placeholder="Search Music..." type="text">
+          <form id="SearchForm" class="navbar-form navbar-right form-group" action="/">
+            <input class="form-control" placeholder="Search Album..." type="text" list="Albums" onkeyup="searchForm()" onclick="searchForm()">
           </form>
+
+          <datalist id="Albums">
+            {% for alb in basealb %}
+              <option value="{{alb.title}}">
+            {% endfor %}
+          </datalist>
 
         </div>
 

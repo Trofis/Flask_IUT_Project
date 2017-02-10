@@ -51,22 +51,32 @@
                 <h2>{{alb[0]}}</h2>
 
                 <div id="main_image">
-                  <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
-
+                  <a href="album/{{alb.title}}">
+                    <img src="static/images/{{alb[1]}}" alt="img" onerror="this.src='../static/INF.jpg'"/>
+                  </a>
                 </div>
                 <div id="overlay_image">
-                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{a['id']}}, {{current_user.id}}, 'SearchAlbum')"/>
+                  {% if current_user.is_authenticated %}
+                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{alb['id']}}, {{current_user.id}}, 'SearchAlbum')"/>
+                  {% else %}
+                    <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:likeAlt({{alb['id']}}, 'SearchAlbum')"/>
+                  {% endif %}
                 </div>
 
               {% else %}
               <h2>{{alb.title}}</h2>
 
               <div id="main_image">
-                <img src="static/images/{{alb.img}}" alt="img" onerror="this.src='../static/INF.jpg';"/>
-
+                <a href="album/{{alb.title}}">
+                  <img src="static/images/{{alb.img}}" alt="img" onerror="this.src='../static/INF.jpg'"/>
+                </a>
               </div>
               <div id="overlay_image">
-                <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{alb.id}}, {{current_user.id}}, 'SearchAlbum')"/>
+                {% if current_user.is_authenticated %}
+                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:like({{alb.id}}, {{current_user.id}}, 'SearchAlbum')"/>
+                {% else %}
+                  <img src="static/like.png" alt="" onerror="this.src='../static/INF.jpg'" onclick="javascript:likeAlt({{alb['id']}}, 'SearchAlbum')"/>
+                {% endif %}
               </div>
 
 
